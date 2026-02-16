@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HygieneDrive - Home Water Tank Cleaning Service</title>
+    <meta name="description" content="HygieneDrive offers professional, safe, and hygienic home water tank cleaning services in India. Book your service instantly for a healthy family and clean water.">
+    <style>
+        :root {
+            --navy-blue: #0F172A;
+            --teal-green: #14B8A6;
+            --light-background: #F8FAFC;
+            --white: #FFFFFF;
+            --border-grey: #E2E8F0;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --radius: 16px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light-background);
+            color: var(--navy-blue);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /* --- Header --- */
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-grey);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            line-height: 1.2;
+        }
+        .logo-name {
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .logo-name .hygiene { color: var(--navy-blue); }
+        .logo-name .drive { color: var(--teal-green); }
+        .logo-tagline {
+            font-size: 13px;
+            color: var(--navy-blue);
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            z-index: 1002;
+        }
+        .menu-icon .line {
+            width: 30px;
+            height: 3px;
+            background-color: var(--navy-blue);
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .menu-open .menu-icon .line-1 { transform: rotate(45deg) translate(7px, 7px); }
+        .menu-open .menu-icon .line-2 { opacity: 0; }
+        .menu-open .menu-icon .line-3 { transform: rotate(-45deg) translate(7px, -7px); }
+
+        /* --- Full-screen Menu --- */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--white);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .menu-open .mobile-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+        .menu-nav { list-style: none; }
+        .menu-nav li { margin: 18px 0; text-align: center; }
+        .menu-nav a {
+            text-decoration: none;
+            color: var(--navy-blue);
+            font-size: 24px;
+            font-weight: 600;
+            padding: 10px 20px;
+            transition: color 0.3s ease;
+        }
+
+        /* --- Page Sections Logic--- */
+        main {
+            padding: 24px 16px 80px 16px;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1, h2, h3 { line-height: 1.3; }
+        h1 { font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+        h2 { font-size: 24px; font-weight: 700; margin-bottom: 24px; }
+        h3 { color: var(--teal-green); font-size: 18px; margin-top: 24px; margin-bottom: 8px; }
+        p { margin-bottom: 16px; color: #334155; }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary {
+            background-color: var(--teal-green);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--navy-blue);
+            border: 1px solid var(--border-grey);
+        }
+
+        /* --- Home Section --- */
+        #home .hero-subtext { font-size: 18px; margin-bottom: 8px; }
+        #home .hero-trustline { font-size: 16px; color: #475569; margin-bottom: 24px; }
+        .trust-points {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 32px;
+            gap: 12px;
+        }
+        .trust-point {
+            padding: 16px 8px;
+            background-color: var(--white);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-grey);
+            flex: 1;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        /* --- Booking Form --- */
+        #booking-form-view {
+             display: none;
+        }
+        .booking-form {
+            background-color: var(--white); 
+            padding: 24px 16px; 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow); 
+            margin-top: 20px;
+            border: 1px solid var(--border-grey);
+        }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius);
+            background-color: var(--light-background);
+            appearance: none; -webkit-appearance: none;
+        }
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 16px center;
+            background-repeat: no-repeat;
+            background-size: 1.5em;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--teal-green);
+            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+        }
+        .address-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-notice {
+            text-align: center;
+            font-size: 14px;
+            color: #475569;
+            margin-top: 16px;
+            padding: 12px;
+            background-color: var(--light-background);
+            border-radius: var(--radius);
+        }
+
+        /* --- Pricing Section --- */
+        .pricing-list { list-style: none; margin-bottom: 24px; }
+        .pricing-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            background-color: var(--white);
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .pricing-item span:first-child { font-weight: 600; }
+        .pricing-item span:last-child { font-weight: 700; color: var(--teal-green); }
+        .no-hidden-charges { font-weight: 600; margin-bottom: 24px; }
+        
+        /* --- Service & How-it-works Cards --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .card {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-grey);
+        }
+        .card-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--teal-green);
+            margin-right: 16px;
+            min-width: 30px;
+            text-align: center;
+        }
+        .card-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .extra-lines { margin-top: 24px; line-height: 1.8; font-weight: 500;}
+
+        /* --- Floating WhatsApp Button --- */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 998;
+            transition: transform 0.2s ease;
+        }
+        .whatsapp-fab:active { transform: scale(0.95); }
+        .whatsapp-fab svg { width: 32px; height: 32px; fill: white; }
+
+        /* --- Footer --- */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-grey);
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-name">
+                <span class="hygiene">Hygiene</span><span class="drive">Drive</span>
+            </div>
+            <div class="logo-tagline">साफ टंकी, सुरक्षित परिवार</div>
+        </div>
+        <button class="menu-icon" id="menu-toggle" aria-label="Toggle Menu">
+            <div class="line line-1"></div>
+            <div class="line line-2"></div>
+            <div class="line line-3"></div>
+        </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="menu-nav">
+            <li><a href="#home" class="menu-link">Home</a></li>
+            <li><a href="#pricing" class="menu-link">Our Pricing</a></li>
+            <li><a href="#contact" class="menu-link">Contact</a></li>
+            <li><a href="#service" class="menu-link">Service</a></li>
+            <li><a href="#about" class="menu-link">About Brand</a></li>
+            <li><a href="#social" class="menu-link">Social Link</a></li>
+            <li><a href="#how-it-works" class="menu-link">How It Works</a></li>
+        </ul>
+    </div>
+
+    <main id="main-content">
+        <!-- Home Section -->
+        <section id="home" class="page-section">
+            <div class="container">
+                <div id="hero-view">
+                    <h1>क्या आपकी पानी की टंकी साफ है?</h1>
+                    <p class="hero-subtext">₹349 से टंकी सफाई | 24 घंटे में सेवा</p>
+                    <p class="hero-trustline">काम पसंद आने के बाद ही पेमेंट</p>
+                    <button class="btn btn-primary" id="show-form-btn">Book Now</button>
+                    <div class="trust-points">
+                        <div class="trust-point">बिना टंकी तोड़े सफाई</div>
+                        <div class="trust-point">सुरक्षित पानी</div>
+                        <div class="trust-point">अनुभवी सफाई</div>
+                    </div>
+                </div>
+
+                <div id="booking-form-view">
+                     <form id="booking-form" class="booking-form" novalidate>
+                        <h2>Water Tank Cleaning Booking</h2>
+                        <p>Fill the details below to book your service.</p>
+                        
+                        <div class="form-group full-width">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="address-grid">
+                            <div class="form-group">
+                                <label for="mobile">Mobile Number</label>
+                                <input type="tel" id="mobile" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tank-size">Tank Size</label>
+                                <select id="tank-size" class="form-select" required>
+                                    <option value="500 L">500 L</option>
+                                    <option value="750 L">750 L</option>
+                                    <option value="1000 L">1000 L</option>
+                                    <option value="1000-2000 L">1000–2000 L</option>
+                                    <option value="2000+ L">2000+ L</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="address-grid">
+                             <div class="form-group">
+                                <label for="house-number">House / Ward Number</label>
+                                <input type="text" id="house-number" class="form-input" required>
+                            </div>
+                             <div class="form-group">
+                                <label for="mohalla">Mohalla / Building</label>
+                                <input type="text" id="mohalla" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="area">Village / Street / Area</label>
+                            <input type="text" id="area" class="form-input" required>
+                        </div>
+
+                        <div class="address-grid">
+                            <div class="form-group">
+                                <label for="district">District</label>
+                                <input type="text" id="district" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" class="form-input" required>
+                            </div>
+                        </div>
+                        
+                        <div class="address-grid">
+                             <div class="form-group">
+                                <label for="landmark">Nearby Famous Place</label>
+                                <input type="text" id="landmark" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincode">PIN Code</label>
+                                <input type="number" id="pincode" class="form-input" required>
+                            </div>
+                        </div>
+                        
+                        <p class="form-notice">हमारी टीम 24–72 घंटे के अंदर विज़िट करेगी।</p>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 16px;">बुकिंग भेजें</button>
+                    </form>
+                </div>
+                <footer class="footer">HygieneDrive ©</footer>
+            </div>
+        </section>
+
+        <!-- Our Pricing Section -->
+        <section id="pricing" class="page-section">
+            <div class="container">
+                <h2>Our Pricing</h2>
+                <ul class="pricing-list">
+                    <li class="pricing-item"><span>500 L</span><span>₹349</span></li>
+                    <li class="pricing-item"><span>750 L</span><span>₹449</span></li>
+                    <li class="pricing-item"><span>1000 L</span><span>₹499</span></li>
+                    <li class="pricing-item"><span>1000–2000 L</span><span>₹699</span></li>
+                    <li class="pricing-item"><span>2000–3000 L</span><span>₹899</span></li>
+                    <li class="pricing-item"><span>3000+ L</span><span>₹999 से शुरू</span></li>
+                </ul>
+                <p class="no-hidden-charges">कोई छुपा चार्ज नहीं।</p>
+                <button class="btn btn-primary book-now-btn">Book Now</button>
+                <footer class="footer">HygieneDrive ©</footer>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="page-section">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <a href="https://wa.me/916266458919?text=Hi%20HygieneDrive,%20I%20would%20like%20to%20know%20more%20about%20your%20water%20tank%20cleaning%20service." target="_blank" class="btn btn-primary">Chat on WhatsApp</a>
+                <div style="margin-top: 32px;">
+                    <h3>Service Area</h3>
+                    <p>अभी हमारी सेवा मध्यप्रदेश में उपलब्ध है।<br>आने वाले एक वर्ष में हमारा लक्ष्य है भारत के हर कोने तक HygieneDrive पहुँचाना।</p>
+                </div>
+                <footer class="footer">HygieneDrive ©</footer>
+            </div>
+        </section>
+
+        <!-- Service Section -->
+        <section id="service" class="page-section">
+            <div class="container">
+                <h2>Our Cleaning Process</h2>
+                 <div class="card-grid">
+                    <div class="card"><div class="card-number">1</div><div class="card-title">टंकी की जांच</div></div>
+                    <div class="card"><div class="card-number">2</div><div class="card-title">अंदर की पूरी सफाई व स्लज हटाना</div></div>
+                    <div class="card"><div class="card-number">3</div><div class="card-title">साफ पानी से धुलाई</div></div>
+                    <div class="card"><div class="card-number">4</div><div class="card-title">अंतिम हाइजीन चेक</div></div>
+                </div>
+                <div class="extra-lines">
+                    <p>परिवार के लिए सुरक्षित<br>बिना नुकसान के सफाई</p>
+                </div>
+                <footer class="footer">HygieneDrive ©</footer>
+            </div>
+        </section>
+        
+        <!-- About Brand Section -->
+        <section id="about" class="page-section">
+            <div class="container">
+                <h2>Brand Introduction</h2>
+                <p>HygieneDrive is a home water tank cleaning service with a primary focus on family safety and providing hygienic water.</p>
+                <div class="mission-vision">
+                    <h3>Mission</h3>
+                    <p>हर घर को सुरक्षित पानी देना।</p>
+                    <h3>Vision</h3>
+                    <p>भारत का भरोसेमंद हाइजीन ब्रांड बनना।</p>
+                </div>
+                <footer class="footer">HygieneDrive ©</footer>
+            </div>
+        </section>
+        
+        <!-- Social Link Section -->
+        <section id="social" class="page-section">
+             <div class="container">
+                <h2>Follow Us on Social Media</h2>
+                <p>Stay updated with our latest offers and tips for a healthy home.</p>
+                <a href="https://www.instagram.com/hygienedrive.in" target="_blank" class="btn btn-secondary">Open Instagram</a>
+                <footer class="footer">HygieneDrive ©</footer>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="page-section">
+            <div class="container">
+                <h2>How It Works</h2>
+                <div class="card-grid">
+                    <div class="card"><div class="card-number">1</div><div><strong>Book Now</strong> क्लिक करें</div></div>
+                    <div class="card"><div class="card-number">2</div><div>24–72 घंटे में विज़िट</div></div>
+                    <div class="card"><div class="card-number">3</div><div>सफाई के बाद पेमेंट</div></div>
+                </div>
+                <button class="btn btn-primary book-now-btn">Book Now</button>
+                <footer class="footer">HygieneDrive ©</footer>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/916266458919?text=Hi%20HygieneDrive!%20I'm%20interested%20in%20your%20tank%20cleaning%20service." class="whatsapp-fab" target="_blank" aria-label="Chat with us on WhatsApp">
+        <svg viewBox="0 0 32 32"><path d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.044-.53-.044-.315 0-.76.214-1.046.515-.287.302-.903.885-.903 2.077 0 1.192.99 2.407 1.134 2.572.143.165 1.995 3.11 4.86 4.23.61.287 1.17.457 1.565.587.62.214 1.17.143 1.635-.143.515-.33 1.405-1.456 1.635-1.84.23-.383.23-.717.044-.885-.188-.17-.4-.287-.6-.488z M16.05 4.84a11.33 11.33 0 0 0-11.27 11.27c0 2.12.57 4.16 1.65 5.94L4 28l6.45-1.62a11.25 11.25 0 0 0 5.58 1.5c6.23 0 11.27-5.04 11.27-11.27S22.28 4.84 16.05 4.84z M22.7 20.93c-.22-.39-.47-.64-1.04-.81-.57-.17-1.17-.12-1.6-.07-.43.05-1.01.27-1.12.32-.11.05-1.09.43-1.09 1.58 0 1.15.68 1.83.68 1.83s-2.12 3.1-4.88 1.25c-2.76-1.85-4.13-5.2-4.13-5.2s.32-.38.83-.94c.51-.56.88-1.11.88-1.11s-.11-.56-.47-1.33c-.36-.77-.94-1.82-.94-1.82s-.43-.43-1.04-.43h-.11c-.61 0-1.22.22-1.78.83-.56.61-1.22 1.69-1.22 3.2 0 1.5.73 2.87.73 2.87s1.46 3.58 5.7 5.7c4.24 2.12 7.74 1.25 7.74 1.25s.99-.94 1.12-1.5c.13-.56.13-2.91-.42-3.48z"></path></svg>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuLinks = document.querySelectorAll('.menu-link');
+            const allSections = document.querySelectorAll('.page-section');
+            const bookingForm = document.getElementById('booking-form');
+            const whatsAppNumber = '916266458919';
+
+            const heroView = document.getElementById('hero-view');
+            const bookingFormView = document.getElementById('booking-form-view');
+            const showFormButton = document.getElementById('show-form-btn');
+            const bookNowButtons = document.querySelectorAll('.book-now-btn');
+
+            const toggleMenu = () => {
+                document.body.classList.toggle('menu-open');
+            };
+
+            const showSection = (sectionId, showForm = false) => {
+                allSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+
+                if (sectionId === 'home') {
+                    heroView.style.display = showForm ? 'none' : 'block';
+                    bookingFormView.style.display = showForm ? 'block' : 'none';
+                }
+
+                if (document.body.classList.contains('menu-open')) {
+                    toggleMenu();
+                }
+                window.scrollTo(0, 0);
+            };
+
+            menuToggle.addEventListener('click', toggleMenu);
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = link.getAttribute('href').substring(1);
+                    showSection(sectionId);
+                });
+            });
+            
+            showFormButton.addEventListener('click', () => {
+                showSection('home', true);
+            });
+
+            bookNowButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    showSection('home', true);
+                });
+            });
+
+            bookingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const requiredFields = [
+                    { id: 'name', name: 'Name' },
+                    { id: 'mobile', name: 'Mobile Number' },
+                    { id: 'house-number', name: 'House/Ward Number' },
+                    { id: 'mohalla', name: 'Mohalla/Building' },
+                    { id: 'area', name: 'Area' },
+                    { id: 'district', name: 'District' },
+                    { id: 'state', name: 'State' },
+                    { id: 'landmark', name: 'Landmark' },
+                    { id: 'pincode', name: 'PIN Code' }
+                ];
+
+                for (const field of requiredFields) {
+                    const input = document.getElementById(field.id);
+                    if (!input.value.trim()) {
+                        alert(`Please enter your ${field.name}.`);
+                        input.focus();
+                        return;
+                    }
+                }
+                
+                const mobileInput = document.getElementById('mobile');
+                if (!/^\d{10}$/.test(mobileInput.value)) {
+                    alert('Please enter a valid 10-digit mobile number.');
+                    mobileInput.focus();
+                    return;
+                }
+                
+                const name = document.getElementById('name').value;
+                const mobile = mobileInput.value;
+                const tankSize = document.getElementById('tank-size').value;
+                const houseNumber = document.getElementById('house-number').value;
+                const mohalla = document.getElementById('mohalla').value;
+                const area = document.getElementById('area').value;
+                const district = document.getElementById('district').value;
+                const state = document.getElementById('state').value;
+                const landmark = document.getElementById('landmark').value;
+                const pincode = document.getElementById('pincode').value;
+                
+                const now = new Date();
+                const currentDateTime = now.toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
+
+                const fullAddress = `${houseNumber}, ${mohalla},\n${area},\n${district}, ${state} - ${pincode}\nLandmark: ${landmark}`;
+
+                const message = `
+*--- HygieneDrive New Booking ---*
+
+*Name:* ${name}
+*Mobile:* ${mobile}
+*Tank Size:* ${tankSize}
+
+*Full Address:*
+${fullAddress}
+
+*Visit Request:* 24–72 घंटे में विज़िट करें
+
+_Booking Time: ${currentDateTime}_
+                `.trim();
+
+                const whatsappUrl = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            });
+            
+            showSection('home');
+        });
+    </script>
+</body>
+</html>
